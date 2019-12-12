@@ -6,6 +6,24 @@
 
 <h2>Details</h2>
 
+@section scripts {
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var message = '@TempData["message"]';
+                if (message.startsWith("Warning")) {
+                    toastr.warning(message);
+                }
+                else {
+
+                    toastr.success('@TempData["message"]');
+                }
+            });
+        </script>
+    }
+}
+
 <div>
     <h4>Article</h4>
     <hr />
@@ -45,6 +63,29 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<div>
+    <h5>Comments</h5>
+    <hr />
+
+    @Html.ActionLink("Add comment", "Create", "Comments", new { articleId = Model.Id }, null)
+
+    <dl class="dl-horizontal">
+        @foreach (var comment in Model.Comments)
+        {
+            <dt>@comment.User.UserName</dt>
+            <dd>@comment.Text</dd>
+            <dd>
+                @if (comment.UserId.Equals(ViewBag.CurrentUserId))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null);
+                }
+                    @if (comment.UserId.Equals(ViewBag.CurrentUserId) || User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null);
+                }
+            </dd>
+        }
+    </dl>
+</div>

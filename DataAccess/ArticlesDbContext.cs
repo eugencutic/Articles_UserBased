@@ -24,5 +24,7 @@ namespace Articles_UserBased.DataAccess
         public virtual DbSet<Article> Articles { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Comment> Comments { get; set; }
     }
 }

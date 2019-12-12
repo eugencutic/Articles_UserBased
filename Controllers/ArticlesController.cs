@@ -18,7 +18,6 @@ namespace Articles_UserBased.Controllers
         private ArticlesDbContext db = new ArticlesDbContext();
 
         // GET: Articles
-        [Authorize(Roles = "User,Editor,Administrator")]
         public ActionResult Index()
         {
             var articles = db.Articles.Include(a => a.Category).Include(a => a.Author);
@@ -28,14 +27,14 @@ namespace Articles_UserBased.Controllers
         }
 
         // GET: Articles/Details/5
-        [Authorize(Roles = "User,Editor,Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Include(a => a.Category).Where(a => a.Id == id).First();
+            Article article = db.Articles.Include(a => a.Category).Include(a => a.Comments).Where(a => a.Id == id).First();
+            ViewBag.CurrentUserId = User.Identity.GetUserId();
             if (article == null)
             {
                 return HttpNotFound();
