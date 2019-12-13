@@ -35,5 +35,7 @@ namespace Articles_UserBased.Models
         [ForeignKey(nameof(UserId))]
         [DisplayName("Author")]
         public virtual ApplicationUser Author { get; set; }
+
+        public virtual List<Comment> Comments { get; set; }
     }
 }
