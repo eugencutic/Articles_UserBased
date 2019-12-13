@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201912121119056_Add_Comments.Designer.cs">
       <DependentUpon>201912121119056_Add_Comments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912131122268_Add_SuggestedBy_To_Article.cs" />
+    <Compile Include="Migrations\201912131122268_Add_SuggestedBy_To_Article.Designer.cs">
+      <DependentUpon>201912131122268_Add_SuggestedBy_To_Article.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -279,9 +283,11 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Articles\AddComment.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Articles\SuggestArticle.cshtml" />
+    <Content Include="Views\Articles\Suggestions.cshtml" />
+    <Content Include="Views\Articles\EditAndPublish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912121119056_Add_Comments.resx">
       <DependentUpon>201912121119056_Add_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912131122268_Add_SuggestedBy_To_Article.resx">
+      <DependentUpon>201912131122268_Add_SuggestedBy_To_Article.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

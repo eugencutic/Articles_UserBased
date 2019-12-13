@@ -12,17 +12,49 @@ using Microsoft.AspNet.Identity;
 
 namespace Articles_UserBased.Controllers
 {
-    [Authorize]
     public class ArticlesController : Controller
     {
         private ArticlesDbContext db = new ArticlesDbContext();
 
         // GET: Articles
-        public ActionResult Index()
+        public ActionResult Index(int categoryId = 0, string sortOrder = "")
         {
-            var articles = db.Articles.Include(a => a.Category).Include(a => a.Author);
+            var articles = 
+                db.Articles
+                .Include(a => a.Category)
+                .Include(a => a.Author)
+                .ToList()
+                .Where(a => !a.IsPendingSuggestion());
+            if (categoryId != 0)
+            {
+                articles = articles.Where(a => a.CategoryId == categoryId);
+            }
+
+            ViewBag.CategoryId = categoryId;
+
+            switch (sortOrder)
+            {
+                case "title_asc":
+                    articles = articles.OrderBy(a => a.Title);
+                    break;
+                case "title_desc":
+                    articles = articles.OrderByDescending(a => a.Title);
+                    break;
+                case "date_asc":
+                    articles = articles.OrderBy(a => a.Date);
+                    break;
+                default:
+                    articles = articles.OrderByDescending(a => a.Date);
+                    break;
+
+            }
+
+            ViewBag.DateSortParam = string.IsNullOrEmpty(sortOrder) ? "date_asc" : "";
+            ViewBag.TitleSortParam = sortOrder == "title_asc" ? "title_desc" : "title_asc";
+            
             ViewData["CurrentUserId"] = User.Identity.GetUserId();
             ViewBag.CurrentUserId = User.Identity.GetUserId();
+            ViewBag.Categories = new List<Category>(db.Categories);
             return View(articles.ToList());
         }
 
@@ -40,6 +72,19 @@ namespace Articles_UserBased.Controllers
                 return HttpNotFound();
             }
             return View(article);
+        }
+
+        // GET: Articles/Suggestions
+        [Authorize(Roles = "Editor,Administrator")]
+        public ActionResult Suggestions()
+        {
+            var articles =
+                db.Articles
+                .Include(a => a.Category)
+                .Include(a => a.SuggestedByUser)
+                .ToList()
+                .Where(a => a.IsPendingSuggestion());
+            return View(articles.ToList());
         }
 
         // GET: Articles/Create
@@ -70,6 +115,39 @@ namespace Articles_UserBased.Controllers
                 db.Articles.Add(article);
                 db.SaveChanges();
                 TempData["message"] = "Articol added.";
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", article.CategoryId);
+            return View(article);
+        }
+
+        // GET: Articles/SuggestArticle
+        [Authorize(Roles = "User,Editor,Administrator")]
+        public ActionResult SuggestArticle()
+        {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            var article = new Article();
+            article.Date = DateTime.Now;
+            return View(article);
+        }
+
+        // POST: Articles/SuggestArticle
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User,Editor,Administrator")]
+        public ActionResult SuggestArticle([Bind(Include = "Id,Title,Content,Date,CategoryId")] Article article)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!article.Date.HasValue)
+                {
+                    article.Date = DateTime.Now;
+                }
+                article.SuggestedByUserId = User.Identity.GetUserId();
+                db.Articles.Add(article);
+                db.SaveChanges();
+                TempData["message"] = "Your suggestion has been saved and is waiting to be reviewed by an editor.";
                 return RedirectToAction("Index");
             }
 
@@ -125,6 +203,44 @@ namespace Articles_UserBased.Controllers
                     
                 return RedirectToAction("Index");
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", article.CategoryId);
+            return View(article);
+        }
+
+        // GET: Articles/EditAndPublish/5
+        [Authorize(Roles = "Editor,Administrator")]
+        public ActionResult EditAndPublish(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var article = db.Articles.Find(id);
+            if (article == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", article.CategoryId);
+            return View(article);
+        }
+
+        // POST: Article/EditAndPublish/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Editor,Administrator")]
+        public ActionResult EditAndPublish([Bind(Include = "Id,Title,Content,Date,CategoryId")] Article article)
+        {
+            if (ModelState.IsValid)
+            {
+                article.UserId = User.Identity.GetUserId();
+                article.Date = DateTime.Now;
+                db.Entry(article).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["message"] = "Article published.";
+
+                return RedirectToAction("Suggestions");
+            }
+
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", article.CategoryId);
             return View(article);
         }

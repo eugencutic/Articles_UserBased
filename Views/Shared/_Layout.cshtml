@@ -23,10 +23,17 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Articles", "Index", "Articles")</li>
-                    <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                    }
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                    }
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                    {
+                        <li>@Html.ActionLink("Suggested articles", "Suggestions", "Articles")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

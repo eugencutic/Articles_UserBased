@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Articles_UserBased.Models.Article>
+
+@{
+    ViewBag.Title = "Suggestions";
+}
+
+<h2>Suggested articles</h2>
+
+@section scripts {
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var message = '@TempData["message"]';
+                if (message.startsWith("Warning")) {
+                    toastr.warning(message);
+                }
+                else {
+
+                    toastr.success('@TempData["message"]');
+                }
+            });
+        </script>
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SuggestedByUser)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var modelItem in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => modelItem.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => modelItem.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => modelItem.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(model => modelItem.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(model => modelItem.SuggestedByUser.UserName)
+            </td>
+            <td>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Edit and publish", "EditAndPublish", new { id = modelItem.Id })
+                }
+                |
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = modelItem.Id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

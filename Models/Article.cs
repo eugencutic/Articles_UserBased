@@ -31,11 +31,19 @@ namespace Articles_UserBased.Models
         public Category Category { get; set; }
 
         public string UserId { get; set; }
-        
+
+        public string SuggestedByUserId { get; set; }
+
         [ForeignKey(nameof(UserId))]
         [DisplayName("Author")]
         public virtual ApplicationUser Author { get; set; }
 
+        [ForeignKey(nameof(SuggestedByUserId))]
+        [DisplayName("Suggested by")]
+        public virtual ApplicationUser SuggestedByUser { get; set; }
+
         public virtual List<Comment> Comments { get; set; }
+
+        public bool IsPendingSuggestion() => SuggestedByUserId != null && UserId == null; 
     }
 }
