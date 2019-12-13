@@ -22,27 +22,51 @@
             });
         </script>
     }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#category-select').on('change', function () {
+                var categoryId = $(this).val();
+                window.location.href = '/Articles/Index?categoryId=' + categoryId;
+            })
+            $('#category-select > [value ="@ViewBag.CategoryId"]').attr("selected", "true");
+        });
+    </script>
 }
 
 <p>
     @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
     {
         @Html.ActionLink("Create New", "Create")
+        <hr />
+    }
+    @if (User.IsInRole("User") || User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
     }
 </p>
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Category)
+            <div>
+                <select id="category-select">
+                    <option selected value="0">All</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.ActionLink("Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Content)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Author)
