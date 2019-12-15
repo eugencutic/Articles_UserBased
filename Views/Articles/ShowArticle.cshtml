@@ -17,12 +17,12 @@
             @Html.DisplayFor(modelItem => Model.Author.UserName)
         </td>
         <td>
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"].ToString())
+            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
             {
                 @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
             }
             |
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"].ToString())
+            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
             {
                 @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
             }

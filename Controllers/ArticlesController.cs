@@ -17,7 +17,7 @@ namespace Articles_UserBased.Controllers
         private ArticlesDbContext db = new ArticlesDbContext();
 
         // GET: Articles
-        public ActionResult Index(int categoryId = 0, string sortOrder = "")
+        public ActionResult Index(int categoryId = 0, string sortOrder = "", string searchString = "")
         {
             var articles = 
                 db.Articles
@@ -31,6 +31,13 @@ namespace Articles_UserBased.Controllers
             }
 
             ViewBag.CategoryId = categoryId;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                articles = articles.Where(a => a.Title.Contains(searchString));
+            }
+
+            ViewBag.SearchString = searchString;
 
             switch (sortOrder)
             {
@@ -186,7 +193,7 @@ namespace Articles_UserBased.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Editor,Administrator")]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,CategoryId")] Article article)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,CategoryId,UserId")] Article article)
         {
             if (ModelState.IsValid)
             {

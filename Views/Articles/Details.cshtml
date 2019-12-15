@@ -68,8 +68,10 @@
 <div>
     <h5>Comments</h5>
     <hr />
-
-    @Html.ActionLink("Add comment", "Create", "Comments", new { articleId = Model.Id }, null)
+    @if (User.IsInRole("User") || User.IsInRole("Editor") || User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Add comment", "Create", "Comments", new { articleId = Model.Id }, null)
+    }
 
     <dl class="dl-horizontal">
         @foreach (var comment in Model.Comments)
@@ -81,7 +83,7 @@
                 {
                     @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null);
                 }
-                    @if (comment.UserId.Equals(ViewBag.CurrentUserId) || User.IsInRole("Administrator"))
+                @if (comment.UserId.Equals(ViewBag.CurrentUserId) || User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null);
                 }

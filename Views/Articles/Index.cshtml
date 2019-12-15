@@ -16,7 +16,7 @@
                     toastr.warning(message);
                 }
                 else {
-                    
+
                     toastr.success('@TempData["message"]');
                 }
             });
@@ -45,6 +45,14 @@
     }
 </p>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Search by title: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -60,13 +68,13 @@
             </div>
         </th>
         <th>
-            @Html.ActionLink("Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
+            @Html.ActionLink("Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Content)
         </th>
         <th>
-            @Html.ActionLink("Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
+            @Html.ActionLink("Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Author)

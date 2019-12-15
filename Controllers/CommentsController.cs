@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Articles_UserBased.Controllers
 {
+    [Authorize]
     public class CommentsController : Controller
     {
         private ArticlesDbContext db = new ArticlesDbContext();
