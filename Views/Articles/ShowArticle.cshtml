@@ -1,33 +1,42 @@
 ﻿@model Articles_UserBased.Models.Article
-
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Category.Name)
-        </td>
-        <td>
+<div>
+    <div>
+        <h2>
             @Html.DisplayFor(modelItem => Model.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Author.UserName)
-        </td>
-        <td>
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"].ToString())
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-            }
-            |
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"].ToString())
-            {
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-            }
-            |
-            @Html.ActionLink("Details", "Details", new { id = Model.Id })
-        </td>
-    </tr>
+        </h2>
+        <ul class="some-list">
+            <li>
+                @Html.DisplayFor(modelItem => Model.Author.UserName)
+            </li>
+            <li>
+                <span>
+                    @Html.DisplayFor(modelItem => Model.Date)
+                </span>
+            </li>
+        </ul>
+    </div>
+    <p>
+        @Html.DisplayFor(modelItem => Model.Content)
+    </p>
+    <div class="article-actions">
+        <ul>
+            <li>
+                @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                }
+            </li>
+            <li>
+                @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                }
+            </li>
+            <li>
+                @Html.ActionLink("Details", "Details", new { id = Model.Id })
+            </li>
+        </ul>
+    </div>
+    <hr />
+</div>
 

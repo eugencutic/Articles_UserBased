@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
 @section scripts {
     @if (TempData["message"] != null)
@@ -33,50 +32,29 @@
     </script>
 }
 
-<p>
-    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-    {
-        @Html.ActionLink("Create New", "Create")
-        <hr />
-    }
-    @if (User.IsInRole("User") || User.IsInRole("Administrator"))
-    {
-        @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
-    }
-</p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-            <div>
-                <select id="category-select">
-                    <option selected value="0">All</option>
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-            </div>
-        </th>
-        <th>
-            @Html.ActionLink("Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.ActionLink("Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th></th>
-    </tr>
-
+<div>
     @foreach (var item in Model)
     {
         @Html.Partial("ShowArticle", item, ViewData);
     }
 
-</table>
+</div>
+<div class="article-buttons-container">
+    <div class="article-buttons">
+        <div class="create-button">
+            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+            {
+                @Html.ActionLink("Create New", "Create")
+                <hr />
+            }
+        </div>
+    </div>
+    <div class="article-buttons">
+        @if (User.IsInRole("User") || User.IsInRole("Administrator"))
+        {
+            @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
+        }
+    </div>
+</div>
+

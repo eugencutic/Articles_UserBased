@@ -3,9 +3,6 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
 @section scripts {
     @if (TempData["message"] != null)
     {
@@ -24,53 +21,34 @@
     }
 }
 
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </dt>
+        <div>
+            <div class="dl-horizontal">
+                <div >
+                    <h1>
+                        @Html.DisplayFor(model => model.Title)
+                    </h1>
+                    <div>
+                        <span>
+                            @Html.DisplayFor(model => model.Category.Name)
+                        </span>
+                        <span>
+                            @Html.DisplayFor(model => model.Date)
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <p class="article-content">
+                        @Html.DisplayFor(model => model.Content)
+                    </p>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
+            </div>
+            @Html.ActionLink("Add comment", "Create", "Comments", new { articleId = Model.Id }, null)
+        </div>
+<hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
 <div>
     <h5>Comments</h5>
-    <hr />
-
-    @Html.ActionLink("Add comment", "Create", "Comments", new { articleId = Model.Id }, null)
-
     <dl class="dl-horizontal">
         @foreach (var comment in Model.Comments)
         {
@@ -88,4 +66,7 @@
             </dd>
         }
     </dl>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
