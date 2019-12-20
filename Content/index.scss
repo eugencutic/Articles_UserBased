@@ -1,0 +1,120 @@
+﻿body {
+    background: white;
+    .my-create-button {
+        background:#d30606;
+        color: white;
+    }
+    .my-create-button:hover {
+        color: white;
+        background: #b94c4c;
+    }
+    .some-list {
+        display: flex;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: inline-block;
+            margin-left: 5px;
+        }
+    }
+
+    p {
+        font-size: 18px;
+        text-align: justify;
+    }
+
+    a {
+        color: gray;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: red;
+    }
+
+    .create-button {
+        width: 100%;
+        height: 30px;
+        border: none;
+        background: #d30606;
+        padding-top: 5px;
+        text-align: center;
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        :hover {
+            background: #b94c4c;
+        }
+    }
+
+    .my-input-container {
+        textarea {
+            width: 500px;
+            height: 400px;
+            max-width:none;
+        }
+    }
+
+    .article-buttons-container {
+        display: flex;
+        width: 100%;
+        position: relative;
+        flex-direction: row-reverse;
+
+        .article-buttons {
+            display: inline-block;
+            width: 150px;
+        }
+    }
+
+    .article-actions {
+        position: relative;
+        width: 100%;
+
+        ul {
+            position: absolute;
+            display: flex;
+            width: 20%;
+            right: 0;
+            list-style: none;
+
+            li {
+                display: inline-block;
+                width: 50px;
+                text-align: center;
+                width: 33.33%;
+
+                a {
+                    text-decoration: none;
+                    color: #000;
+                }
+
+                a:hover {
+                    color: #d30606;
+                }
+            }
+        }
+
+        padding-bottom: 15px;
+    }
+}
+.select-category-wrapper{
+    display:flex;
+    margin:15px 0;
+    width:100%;
+    div {
+        display:inline-block;
+        margin-left:5px;
+        select {
+            width:100%;
+            border:none;
+            background:transparent;
+            font-weight:700;
+        }
+    }
+}
