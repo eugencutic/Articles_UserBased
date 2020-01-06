@@ -1,33 +1,43 @@
 ﻿@model Articles_UserBased.Models.Article
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Category.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Author.UserName)
-        </td>
-        <td>
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-            }
-            |
-            @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
-            {
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-            }
-            |
-            @Html.ActionLink("Details", "Details", new { id = Model.Id })
-        </td>
-    </tr>
 
+<div>
+    <div>
+        <div class="article-header-container">
+            <h1>
+                @Html.DisplayFor(modelItem => Model.Title)
+            </h1>
+        </div>
+        <div class="author-category-container">
+            <div>
+                @Html.DisplayFor(modelItem => Model.Author.UserName)
+            </div>
+            <div>
+                @Html.DisplayFor(modelItem => Model.Date)
+            </div>
+        </div>
+        <div>
+            @Html.DisplayFor(modelItem => Model.Category.Name)
+        </div>
+    </div>
+    <p>
+        @Html.DisplayFor(modelItem => Model.Content)
+    </p>
+    <div class="article-buttons-container">
+        @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
+        {
+        <div class="article-buttons">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        </div>
+        }
+        @if (User.IsInRole("Administrator") || Model.Author?.Id == ViewData["CurrentUserId"]?.ToString())
+        {
+        <div  class="article-buttons">
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        </div>
+        }
+        <div  class="article-buttons">
+            @Html.ActionLink("Details", "Details", new { id = Model.Id })
+        </div>
+    </div>
+</div>

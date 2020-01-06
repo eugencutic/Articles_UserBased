@@ -29,7 +29,8 @@ namespace Articles_UserBased
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                        "~/Content/toastr.css*",
-                       "~/Content/toastr.scss*"));
+                       "~/Content/toastr.scss*",
+                       "~/Content/index.css"));
         }
     }
 }

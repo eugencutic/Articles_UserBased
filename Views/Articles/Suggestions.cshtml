@@ -24,56 +24,47 @@
     }
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SuggestedByUser)
-        </th>
-        <th></th>
-    </tr>
-
+<div>
     @foreach (var modelItem in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => modelItem.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => modelItem.Title)
-            </td>
-            <td>
+        <div>
+            <div>
+                <div class="article-header-container">
+                    <h1>
+                        @Html.DisplayFor(model => modelItem.Title)
+                    </h1>
+                </div>
+                <div class="author-category-container">
+                    <div>
+                        @Html.DisplayFor(model => modelItem.SuggestedByUser.UserName)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => modelItem.Date)
+                    </div>
+                </div>
+                <div>
+                     Category: @Html.DisplayFor(model => modelItem.Category.Name)
+                </div>
+            </div>
+            <p>
                 @Html.DisplayFor(model => modelItem.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(model => modelItem.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(model => modelItem.SuggestedByUser.UserName)
-            </td>
-            <td>
+            </p>
+            <div class="article-buttons-container">
                 @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
                 {
-                    @Html.ActionLink("Edit and publish", "EditAndPublish", new { id = modelItem.Id })
+                    <div class="suggested-article-buttons">
+                        @Html.ActionLink("Edit and publish", "EditAndPublish", new { id = modelItem.Id })
+                    </div>
                 }
-                |
+
                 @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
                 {
-                    @Html.ActionLink("Delete", "Delete", new { id = modelItem.Id })
+                    <div class="suggested-article-buttons">
+                        @Html.ActionLink("Delete", "Delete", new { id = modelItem.Id })
+                    </div>
                 }
-            </td>
-        </tr>
+            </div>
+        </div>
     }
 
-</table>
+</div>

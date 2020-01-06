@@ -33,24 +33,41 @@
 }
 
 <div class="select-category-wrapper">
-    <div>
-        Choose @Html.DisplayNameFor(model => model.Category)
+    <div class="articles-menu">
+        <div>
+            Choose @Html.DisplayNameFor(model => model.Category)
+        </div>
+        <div>
+            <select id="category-select">
+                <option selected value="0">All</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            @Html.ActionLink("Sort by Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
+        </div>
+        <div>
+            @Html.ActionLink("Sort by Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
+        </div>
     </div>
- 
-    <div>
-        <select id="category-select">
-            <option selected value="0">All</option>
-            @foreach (var category in ViewBag.Categories)
+    <div class="second">
+        <div class="article-buttons">
+            <div>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
+            </div>
+        </div>
+        <div class="article-buttons">
+            @if (User.IsInRole("User") || User.IsInRole("Administrator"))
             {
-                <option value="@category.Id">@category.Name</option>
+                @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
             }
-        </select>
-    </div>
-    <div>
-        @Html.ActionLink("Sort by Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
-    </div>
-    <div>
-         @Html.ActionLink("Sort by Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
+        </div>
     </div>
 </div>
 <div>
@@ -60,21 +77,5 @@
     }
 
 </div>
-<div class="article-buttons-container">
-    <div class="article-buttons">
-        <div class="create-button">
-            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-            {
-                @Html.ActionLink("Create New", "Create")
-                <hr />
-            }
-        </div>
-    </div>
-    <div class="article-buttons">
-        @if (User.IsInRole("User") || User.IsInRole("Administrator"))
-        {
-            @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
-        }
-    </div>
-</div>
+
 
