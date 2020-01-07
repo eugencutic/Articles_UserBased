@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
 @section scripts {
     @if (TempData["message"] != null)
@@ -16,7 +15,7 @@
                     toastr.warning(message);
                 }
                 else {
-
+                    
                     toastr.success('@TempData["message"]');
                 }
             });
@@ -33,58 +32,50 @@
     </script>
 }
 
-<p>
-    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-    {
-        @Html.ActionLink("Create New", "Create")
-        <hr />
-    }
-    @if (User.IsInRole("User") || User.IsInRole("Administrator"))
-    {
-        @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
-    }
-</p>
-
-@using (Html.BeginForm())
-{
-    <p>
-        Search by title: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-}
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
+<div class="select-category-wrapper">
+    <div class="articles-menu">
+        <div>
+            Choose @Html.DisplayNameFor(model => model.Category)
+        </div>
+        <div>
+            <select id="category-select">
+                <option selected value="0">All</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            @Html.ActionLink("Sort by Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam })
+        </div>
+        <div>
+            @Html.ActionLink("Sort by Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam })
+        </div>
+    </div>
+    <div class="second">
+        <div class="article-buttons">
             <div>
-                <select id="category-select">
-                    <option selected value="0">All</option>
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
             </div>
-        </th>
-        <th>
-            @Html.ActionLink("Title", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.TitleSortParam, searchString = ViewBag.SearchString })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.ActionLink("Date", "Index", new { categoryId = ViewBag.CategoryId, sortOrder = ViewBag.DateSortParam, searchString = ViewBag.SearchString })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th></th>
-    </tr>
-
+        </div>
+        <div class="article-buttons">
+            @if (User.IsInRole("User") || User.IsInRole("Administrator"))
+            {
+                @Html.ActionLink("Got news? Suggest an article.", "SuggestArticle")
+            }
+        </div>
+    </div>
+</div>
+<div>
     @foreach (var item in Model)
     {
         @Html.Partial("ShowArticle", item, ViewData);
     }
 
-</table>
+</div>
+
+

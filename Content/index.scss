@@ -1,0 +1,271 @@
+﻿body {
+    background: white;
+    .my-create-button {
+        background:#d30606;
+        color: white;
+    }
+    .my-create-button:hover {
+        color: white;
+        background: #b94c4c;
+    }
+    .some-list {
+        display: flex;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: inline-block;
+            margin-left: 5px;
+        }
+    }
+
+    p {
+        font-size: 18px;
+        text-align: justify;
+    }
+
+    a {
+        color: gray;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: red;
+    }
+
+    .create-button {
+        width: 100%;
+        height: 30px;
+        border: none;
+        background: #d30606;
+        padding-top: 5px;
+        text-align: center;
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        :hover {
+            background: #b94c4c;
+        }
+    }
+
+    .my-input-container {
+        textarea {
+            width: 500px;
+            height: 400px;
+            max-width:none;
+        }
+    }
+
+    .article-buttons-container {
+        display: flex;
+        width: 100%;
+        position: relative;
+        flex-direction: row-reverse;
+
+        .article-buttons {
+            display: inline-block;
+            width: 70px;
+            text-align:center;
+        }
+    }
+
+    .article-actions {
+        position: relative;
+        width: 100%;
+
+        ul {
+            position: absolute;
+            display: flex;
+            width: 20%;
+            right: 0;
+            list-style: none;
+
+            li {
+                display: inline-block;
+                width: 50px;
+                text-align: center;
+                width: 33.33%;
+
+                a {
+                    text-decoration: none;
+                    color: #000;
+                }
+
+                a:hover {
+                    color: #d30606;
+                }
+            }
+        }
+
+        padding-bottom: 15px;
+    }
+}
+.select-category-wrapper {
+    margin: 15px 0;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    .articles-menu {
+        display: inline-flex;
+        width: 50%;
+
+        div {
+            width: 25%;
+            display: inline-block;
+
+            select {
+                width: 100%;
+                border: none;
+                background: transparent;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .second {
+        display: inline-flex;
+        width: 50%;
+
+        .article-buttons {
+            width: 50%;
+            display: inline-block;
+        }
+    }
+}
+
+.author-category-container {
+    div{
+        display:inline-block;
+        
+    }
+}
+
+.categories-header {
+    width:100%;
+    display:flex;
+    div {
+        display:inline-block;
+        width:25%;
+        h1{
+            margin:0;
+        }
+
+    }
+    .create-category{
+        width:75%;
+        text-align:right;
+    }
+    margin:20px 0;
+    padding-right:100px;
+}
+.categories-list{
+    width:100%;
+    list-style:none;
+    margin:0;
+    padding:0;
+    .category{
+        display:flex;
+        .category-name{
+            width:25%;
+            font-size:2.5rem;
+            font-weight:700;
+            display:inline-block;
+            text-align:left;
+        }
+        .category-buttons{
+            width:75%;display:inline-flex;
+            div{
+                width:33.33%;
+                text-align:center;
+                display:inline-block;
+            }
+        }
+    }
+}
+
+
+
+.user-header{
+    margin-top:20px;
+    width:100%;
+    display:flex;
+    div{
+        width:16.66%;
+        display:inline-block;
+        font-size:2rem;
+        font-weight:700;
+    }
+}
+.user-list{
+    width:100%;
+    list-style:none;
+    margin:10px 0 0 0;
+    padding:0;
+    .user{
+        display:flex;
+        width:100%;
+        margin-bottom:5px;
+        border-bottom:1px solid #f3f3f3;
+        div{
+            display:inline-block;
+            width:16.66%;
+            text-align:left;
+            font-size:1.5rem;
+            font-weight:700;
+        }
+    }
+}
+
+.suggested-article-buttons{
+    margin-left:5px;
+}
+
+
+.form-group{
+    width:100%;
+    margin:0;
+    display:flex;
+    .create-title{
+        display:inline-flex;
+        width:25%;
+    }
+    .content{
+        display:inline-block;
+        width:75%;
+        textarea{
+            width:100%;
+            min-height:400px;
+            max-width:none;
+        }
+    }
+    margin-bottom:10px;
+
+}
+
+textarea {
+    width: 100%;
+    min-height: 400px;
+    max-width: none;
+}
+.create-header {
+    display: flex;
+    width: 100%;
+
+    div {
+        width: 33.33%;
+        display: inline-flex;
+        padding-top: 20px;
+    }
+
+    .create-button-wrapper {
+        position:relative;
+        input{
+            position:absolute;
+            right:0;
+        }
+    }
+}
